@@ -9,7 +9,7 @@ var players = {}
 #!!!THIS IS IMPORTANT!!!
 #CHANGE THIS VARIABLE BY ONE EVERY COMMIT TO PREVENT OLD CLIENTS FROM TRYING TO CONNECT TO SERVERS!!!
 #A way to make up version number: year month date hour of editing this script
-var version = 20122513
+var version = 210545
 var intruders = 0
 var newnumber
 var spawn_pos = Vector2(0,0)
