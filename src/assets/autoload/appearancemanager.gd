@@ -19,7 +19,8 @@ func _ready():
 	my_customization = SaveLoadHandler.load_data(customization_path)
 	if my_customization.empty():
 		my_customization = randomAppearance()
-	GameManager.connect("state_changed_priority", self, "_on_state_changed_priority")
+	# warning-ignore:return_value_discarded
+	GameManager.connect("state_changed", self, "_on_gamestate_changed")
 
 func enableMyAppearance():
 	setPlayerAppearance(Network.get_my_id(), my_customization)
@@ -115,9 +116,8 @@ func changeMyAppearance(custmoization_data) -> void:
 func getMyAppearance() -> Dictionary:
 	return my_customization
 
-func _on_state_changed_priority(old_state: int, new_state: int, priority: int) -> void:
-	if priority != 5:
-		return
+# TODO: old priority 5
+func _on_gamestate_changed(old_state: int, new_state: int) -> void:
 	if new_state == GameManager.State.Lobby:
 		customization_change = true
 		enableMyAppearance()

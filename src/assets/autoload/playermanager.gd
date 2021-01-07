@@ -32,7 +32,7 @@ signal roles_assigned
 func _ready():
 	set_network_master(1)
 # warning-ignore:return_value_discarded
-	GameManager.connect("state_changed_priority", self, "state_changed_priority")
+	GameManager.connect("state_changed", self, "_on_gamestate_changed")
 
 func assigntasks():
 	for id in Network.peers:
@@ -53,10 +53,9 @@ remote func gettasks(tasksget):
 	assignedtasks = tasksget
 	print("we got our tasks!")
 
+# TODO: old priority 2
 # warning-ignore:unused_argument
-func state_changed_priority(old_state: int, new_state: int, priority: int):
-	if priority != 2:
-		return
+func _on_gamestate_changed(old_state: int, new_state: int):
 	match new_state:
 		GameManager.State.Normal:
 			assignRoles(Network.get_peers())

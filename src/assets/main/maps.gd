@@ -25,16 +25,14 @@ func _ready() -> void:
 	switchMap(currentMap)
 	update_map_info()
 # warning-ignore:return_value_discarded
-	GameManager.connect("state_changed_priority", self, "_on_state_changed_priority")
+	GameManager.connect("state_changed", self, "_on_gamestate_changed")
 
 #func _init():
 # warning-ignore:return_value_discarded
-#	GameManager.connect("state_changed_priority", self, "_on_state_changed_priority")
 
+# TODO: old priority 1
 # warning-ignore:unused_argument
-func _on_state_changed_priority(old_state: int, new_state: int, priority: int) -> void:
-	if priority != 1:
-		return
+func _on_gamestate_changed(old_state: int, new_state: int) -> void:
 	match new_state:
 		GameManager.State.Lobby:
 			switchMap("Lobby")

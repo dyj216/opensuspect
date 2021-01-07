@@ -22,7 +22,6 @@ var priority_amount: int = 6
 #signals that help sync the gamestate
 #can be connected to from anywhere with GameManager.connect("<signal name>", self, "<function name>")
 signal state_changed(old_state, new_state)
-signal state_changed_priority(old_state, new_state, priority)
 
 func _ready():
 	set_network_master(1)
@@ -58,9 +57,6 @@ puppet func receive_transition(new_state: int):
 	return# false
 
 func emit_state_changed_signals(old_state: int, new_state: int):
-	# emit state_changed_priority, priority starts at 0
-	for priority in priority_amount:
-		emit_signal("state_changed_priority", old_state, new_state, priority)
 	emit_signal('state_changed', old_state, new_state)
 
 func get_state() -> int:

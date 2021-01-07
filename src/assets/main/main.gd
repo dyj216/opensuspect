@@ -19,7 +19,8 @@ signal positions_updated(last_received_input)
 
 func _ready() -> void:
 	set_network_master(1)
-	GameManager.connect("state_changed_priority", self, "state_changed_priority")
+	# warning-ignore:return_value_discarded
+	GameManager.connect("state_changed", self, "_on_gamestate_changed")
 
 # Gets called when the title scene sets this scene as the main scene
 func _enter_tree() -> void:
@@ -159,9 +160,8 @@ master func _on_maps_spawn(spawnPositions: Array):
 	#spawn players
 	#rpc("createPlayers", Network.get_player_names(), spawnPointDict)
 
-func state_changed_priority(old_state: int, new_state, priority: int):
-	if priority != 5:
-		return
+# TODO: Old priority 5
+func _on_gamestate_changed(old_state: int, new_state):
 	if new_state == GameManager.State.Lobby or new_state == GameManager.State.Normal:
 		rpc("createPlayers", Network.get_player_names(), player_spawn_points)
 

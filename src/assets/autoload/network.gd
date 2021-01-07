@@ -21,7 +21,7 @@ func _ready() -> void:
 	# give the server access to puppet functions and variables
 	set_network_master(1)
 # warning-ignore:return_value_discarded
-	GameManager.connect("state_changed_priority", self, "_on_state_changed_priority")
+	GameManager.connect("state_changed", self, "_on_state_changed")
 
 func client_server(port: int, playerName: String) -> void:
 	print("Starting server on port ", port, " with host player name ", playerName)
@@ -175,9 +175,7 @@ func get_peers() -> Array:
 	return peers
 
 # warning-ignore:unused_argument
-func _on_state_changed_priority(old_state: int, new_state: int, priority: int) -> void:
-	if priority != 0:
-		return
+func _on_state_changed(old_state: int, new_state: int) -> void:
 	match new_state:
 		GameManager.State.Normal:
 			print('Network manager refusing further connections')
